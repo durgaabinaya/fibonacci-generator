@@ -1,0 +1,23 @@
+module tb_fibonacci_gen;
+ reg clk;
+ reg reset;
+ wire [31:0] fib_out;
+ fibonacci_gen uut (
+ .clk(clk),
+ .reset(reset),
+ .fib_out(fib_out)
+ );
+ initial begin
+ clk = 0;
+ forever #5 clk = ~clk; // 10 ns clock period
+ end
+ initial begin
+ $monitor($time, " Reset=%b, Fibonacci=%d", reset, fib_out);
+ reset = 1;
+ #10;
+ reset = 0;
+ 
+#100;
+ $finish;
+ end
+endmodule
